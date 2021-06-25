@@ -10,6 +10,7 @@ class SearchBar extends Component {
     }
 
     handleChange = (event) => {
+        console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -23,8 +24,9 @@ class SearchBar extends Component {
     render() {
         return (
             <form onSubmit={(event) => this.handleSubmit(event)}>
-                <input type="text" name="searchQuery" onChange={this.handleChange} value={this.searchQuery}/>
-                <button type="submit">Search: </button>
+                <input type="text" name="searchQuery" placeholder="Search"
+                onChange={this.handleChange} value={this.searchQuery}/>
+                <button type="submit">Submit </button>
             </form>
         )
     }
