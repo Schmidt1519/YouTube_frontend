@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import SearchBar from './components/SearchBar/searchBar';
-import CommentForm from './components/CommentForm/commentForm';
+import axios from 'axios'
+import SearchBar from './components/searchBar/searchBar'
 
 class App extends Component {
   constructor(props) {
@@ -18,13 +17,11 @@ class App extends Component {
   
   searchVideo = async (searchQuery) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-    
-    // let relatedVideos = await this.getRelatedVideos(searchQuery)
+    let relatedVideos = await this.getRelatedVideos(searchQuery)
     this.setState({
       videoId: response.data.items[0].id.videoId,
       videoTitle: response.data.items[0].snippet.title,
       videoDescription: response.data.items[0].snippet.description,
-      // relatedVideos: relatedVideos
     })
     console.log(this.state.videoTitle)
   }
@@ -37,9 +34,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.searchVideo('software development')
-    // this.getComments();
-    // this.getReplies();
+    this.getComments();
+    this.getReplies();
   }
 
   getComments = async () => {
@@ -53,7 +49,6 @@ class App extends Component {
       console.log(err)
     }
   }
-
 
   getReplies = async () => {
     try{
@@ -90,15 +85,16 @@ class App extends Component {
   render() { 
     return (
       <React.Fragment>
-        <h1>YouTube Clone</h1>
         <SearchBar searchVideo={this.searchVideo}/>
-          <iframe id="ytplayer" title="title" type="text/html" width="640" height="360"
-            src={`https://www.youtube.com/embed/${this.state.videoId}?`}
-            frameborder="0"></iframe>
-        <h2>{this.state.videoTitle}</h2>
-        <h3>{this.state.videoDescription}</h3>
-        <CommentForm showComments={this.getComments}/>
-        {/* <h3>{this.state.relatedVideos}</h3> */}
+        <div className="container">
+        <iframe id="ytplayer" title="title" type="text/html" width="640" height="360"
+  src={`https://www.youtube.com/embed/${this.state.videoId}?autoplay=1&origin=http://example.com`}
+  frameborder="0"></iframe>
+        
+          <h2>{this.state.videoTitle}</h2>
+          <h3>{this.state.videoDescription}</h3>
+          {/* <h3>{this.state.relatedVideos}</h3> */}
+        </div>
       </React.Fragment>
     );
   }
