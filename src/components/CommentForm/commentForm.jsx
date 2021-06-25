@@ -12,7 +12,6 @@ class CommentForm extends Component {
             // this.handleSubmit = this.handleSubmit.bind(this); 
     }
 
-    
     addComment = async () => {
         const comment = {
             video_id: this.props.video_id,
