@@ -5,12 +5,12 @@ const RelatedVideos = (props) => {
     function videoLinks() {
         return props.relatedVideos.map((video) => {
             return (
-                    <ul><a href={`http://www.youtube.com/watch?v=${video.videoId}`}>{video.videoTitle}</a></ul>
+                    <li><a href={`http://www.youtube.com/watch?v=${video.videoId}`}>{video.videoTitle}</a></li>
             );
         });
     }
         return (
-            <div className="container">
+            <div>
                 {videoLinks()}
             </div>
         );

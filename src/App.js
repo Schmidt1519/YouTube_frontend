@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from './components/searchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
@@ -50,7 +51,6 @@ class App extends Component {
         videoDescription: videoData.videoDescription,
         relatedVideos: relatedVideosArray
     })
-    console.log(this.state.relatedVideos)
 }
 
   
