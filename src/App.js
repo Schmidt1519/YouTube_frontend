@@ -2,31 +2,42 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import SearchBar from './components/SearchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
+import CommentList from './components/CommentList/commentList';
 
 class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
         comments: [],
+        filteredComments: [],
         replies: [],
-        videoId: '',
+        videoId: "pquPUX1EihM",
         videoTitle: '',
         videoDescription: '',
         relatedVideos: [],
       }
   }
+
+  componentDidMount() {
+    this.searchVideo('software development')
+    this.getComments();
+    // this.getReplies();
+  }
   
   searchVideo = async (searchQuery) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-    
-    // let relatedVideos = await this.getRelatedVideos(searchQuery)
-    this.setState({
+    // let relatedVideos = await this.getRelatedVideos(response.data.items[0].id.videoId)
+    // .then(this.setState({
+      this.setState({
       videoId: response.data.items[0].id.videoId,
       videoTitle: response.data.items[0].snippet.title,
       videoDescription: response.data.items[0].snippet.description,
       // relatedVideos: relatedVideos
-    })
+    // }))
+      })
+    console.log(this.state.videoId)
     console.log(this.state.videoTitle)
+    console.log(this.state.videoDescription)
   }
 
   getRelatedVideos = async () => {
@@ -34,30 +45,28 @@ class App extends Component {
     this.setState({
       relatedVideos: response.data.items
     })
-  }
-
-  componentDidMount() {
-    this.searchVideo('software development')
-    // this.getComments();
-    // this.getReplies();
+    console.log(response.data.items)
   }
 
   getComments = async () => {
     try{
-      let response = await axios.get(`http://127.0.0.1:8000/comments/`)
-      this.setState({
-        comments: response.data,
-      });
+      let response = await axios.get('http://127.0.0.1:8000/comments/')
+                                // .then( console.log("response is: ", response.data)
+                                  this.setState({
+                                  comments: response.data,
+                                  })
+                                  console.log(response.data)
+                                // )
+                                this.filterComments();
     }
     catch (err) {
       console.log(err)
     }
   }
 
-
   getReplies = async () => {
     try{
-      let response = await axios.get(`http://127.0.0.1:8000/reply/`)
+      let response = await axios.get('http://127.0.0.1:8000/reply/')
       this.setState({
         replies: response.data,
       });
@@ -87,6 +96,15 @@ class App extends Component {
     }
   }
 
+  filterComments = () => {
+    let filtered = this.state.comments.filter(comment => comment.video_id.includes(this.state.videoId))
+    console.log(this.state.videoId)
+    this.setState({
+      filteredComments:filtered
+    })
+    console.log(this.state.filteredComments);
+  }
+
   render() { 
     return (
       <React.Fragment>
@@ -98,6 +116,7 @@ class App extends Component {
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
         <CommentForm showComments={this.getComments}/>
+        <CommentList allComments={this.state.filteredComments}/>
         {/* <h3>{this.state.relatedVideos}</h3> */}
       </React.Fragment>
     );
