@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import axios from 'axios'
-import SearchBar from './components/searchBar/searchBar'
-=======
 import axios from 'axios';
-import SearchBar from './components/SearchBar/searchBar';
+import SearchBar from './components/searchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
->>>>>>> 9cb9ec2244b95069ec0feb0b64a0b45c10f1b97a
+import RelatedVideos from './components/relatedVideos/relatedVideos'
 
 class App extends Component {
   constructor(props) {
@@ -16,76 +12,64 @@ class App extends Component {
         comments: [],
         filteredComments: [],
         replies: [],
-        videoId: "pquPUX1EihM",
+        videoId: '',
+        // videoId: "jakpo7tj7Qw",
         videoTitle: '',
         videoDescription: '',
         relatedVideos: [],
       }
   }
-
   componentDidMount() {
-    this.searchVideo('software development')
+    // this.searchVideo('software development')
     this.getComments();
     // this.getReplies();
   }
   
+  
   searchVideo = async (searchQuery) => {
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-<<<<<<< HEAD
-    let relatedVideos = await this.getRelatedVideos(searchQuery)
-    this.setState({
-      videoId: response.data.items[0].id.videoId,
-      videoTitle: response.data.items[0].snippet.title,
-      videoDescription: response.data.items[0].snippet.description,
-    })
-=======
-    // let relatedVideos = await this.getRelatedVideos(response.data.items[0].id.videoId)
-    // .then(this.setState({
+    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
+    let allVideos = response.data;
+    this.getRelatedVideos({
+      videoId: allVideos.items[0].id.videoId,
+      videoTitle: allVideos.items[0].snippet.title,
+      videoDescription: allVideos.items[0].snippet.description,
+  })
+}
+
+  getRelatedVideos = async (videoData) => { 
+    let response = await axios.get (`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoData.videoId}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
+    let relatedVideos = response.data.items.filter(video => video.snippet);
+    let relatedVideosArray = relatedVideos.map((video) => {
+      return ({
+          videoId: video.id.videoId,
+          videoTitle: video.snippet.title,});
+      });
       this.setState({
-      videoId: response.data.items[0].id.videoId,
-      videoTitle: response.data.items[0].snippet.title,
-      videoDescription: response.data.items[0].snippet.description,
-      // relatedVideos: relatedVideos
-    // }))
-      })
-    console.log(this.state.videoId)
->>>>>>> 9cb9ec2244b95069ec0feb0b64a0b45c10f1b97a
-    console.log(this.state.videoTitle)
-    console.log(this.state.videoDescription)
-  }
-
-  getRelatedVideos = async () => {
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${this.state.videoId}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-    this.setState({
-      relatedVideos: response.data.items
+        videoId: videoData.videoId,
+        videoTitle: videoData.videoTitle,
+        videoDescription: videoData.videoDescription,
+        relatedVideos: relatedVideosArray
     })
-<<<<<<< HEAD
-  }
+    console.log(this.state.relatedVideos)
+}
 
-  componentDidMount() {
-    this.getComments();
-    this.getReplies();
-=======
-    console.log(response.data.items)
->>>>>>> 9cb9ec2244b95069ec0feb0b64a0b45c10f1b97a
-  }
-
+  
+  
   getComments = async () => {
     try{
       let response = await axios.get('http://127.0.0.1:8000/comments/')
-                                // .then( console.log("response is: ", response.data)
-                                  this.setState({
-                                  comments: response.data,
-                                  })
-                                  console.log(response.data)
-                                // )
-                                this.filterComments();
+        // .then( console.log("response is: ", response.data)
+          this.setState({
+          comments: response.data,
+          })
+          console.log(response.data)
+        // )
+        this.filterComments();
     }
     catch (err) {
       console.log(err)
     }
   }
-
   getReplies = async () => {
     try{
       let response = await axios.get('http://127.0.0.1:8000/reply/')
@@ -97,7 +81,6 @@ class App extends Component {
       console.log(err)
     }
   }
-
   deleteCommentById = async (id) => {
     try{
       await axios.delete(`http://127.0.0.1:8000/comments/${id}`)
@@ -107,7 +90,6 @@ class App extends Component {
       console.log(err)
     }
   }
-
   deleteReplyById = async (id) => {
     try{
       await axios.delete(`http://127.0.0.1:8000/reply/${id}`)
@@ -117,7 +99,6 @@ class App extends Component {
       console.log(err)
     }
   }
-
   filterComments = () => {
     let filtered = this.state.comments.filter(comment => comment.video_id.includes(this.state.videoId))
     console.log(this.state.videoId)
@@ -126,34 +107,21 @@ class App extends Component {
     })
     console.log(this.state.filteredComments);
   }
-
   render() { 
     return (
       <React.Fragment>
+        <h1>YouTube Clone</h1>
         <SearchBar searchVideo={this.searchVideo}/>
-<<<<<<< HEAD
-        <div className="container">
-        <iframe id="ytplayer" title="title" type="text/html" width="640" height="360"
-  src={`https://www.youtube.com/embed/${this.state.videoId}?autoplay=1&origin=http://example.com`}
-  frameborder="0"></iframe>
-        
-          <h2>{this.state.videoTitle}</h2>
-          <h3>{this.state.videoDescription}</h3>
-          {/* <h3>{this.state.relatedVideos}</h3> */}
-        </div>
-=======
           <iframe id="ytplayer" title="title" type="text/html" width="640" height="360"
             src={`https://www.youtube.com/embed/${this.state.videoId}?`}
             frameborder="0"></iframe>
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
+        <RelatedVideos relatedVideos={this.state.relatedVideos} />
         <CommentForm showComments={this.getComments}/>
         <CommentList allComments={this.state.filteredComments}/>
-        {/* <h3>{this.state.relatedVideos}</h3> */}
->>>>>>> 9cb9ec2244b95069ec0feb0b64a0b45c10f1b97a
       </React.Fragment>
     );
   }
 }
-
 export default App;
