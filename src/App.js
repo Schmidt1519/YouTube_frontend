@@ -14,10 +14,11 @@ class App extends Component {
         filteredComments: [],
         replies: [],
         // videoId: '',
-        videoId: "pquPUX1EihM",
+        videoId: "pp4YQPykBMM",
         videoTitle: '',
         videoDescription: '',
         relatedVideos: [],
+      
       }
   }
 
@@ -163,7 +164,7 @@ class App extends Component {
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
         <RelatedVideos relatedVideos={this.state.relatedVideos} />
-        <CommentForm showComments={this.getComments}/>
+        <CommentForm showComments={this.getComments} video_id={this.state.videoId} />
         <CommentList allComments={this.state.filteredComments}
         likeComment={this.likeComment} dislikeComment={this.dislikeComment}/>
         {/* <h3>{this.state.relatedVideos}</h3> */}

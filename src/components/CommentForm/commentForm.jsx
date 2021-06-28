@@ -5,17 +5,19 @@ class CommentForm extends Component {
     constructor(props) {
         super(props);
             this.state = {
-                //     video_id: '',
-                //     comment_text: '',
+                    video_id: '',
+                    comment_text:''
+                    
             }
-            // this.handleChange = this.handleChange.bind(this); 
-            // this.handleSubmit = this.handleSubmit.bind(this); 
+        // this.handleChange = this.handleChange.bind(this); 
+        // this.handleSubmit = this.handleSubmit.bind(this);  
     }
 
     addComment = async () => {
         const comment = {
             video_id: this.props.video_id,
-            comment_text: this.props.comment_text,
+            comment_text:this. props.comment_text
+            
         }
         try{
             console.log("add comment request is called")  // test
@@ -48,10 +50,7 @@ class CommentForm extends Component {
                 <h1>Comments</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div>
-                    <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="Name"/>
-                    </div>
-                    <div>
-                    <textarea onChange={this.handleChange} value={this.state.comment} placeholder="Comment here"/>    
+                    <textarea onChange={this.handleChange} name="comment_text" value={this.props.comment_text} placeholder="Comment here"/>    
                     </div>  
                     <div>
                         <button type="submit">Submit</button>
