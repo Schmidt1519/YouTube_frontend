@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SearchBar from './components/SearchBar/searchBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchBar from './components/searchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
+import RelatedVideos from './components/relatedVideos/relatedVideos'
 
 class App extends Component {
   constructor(props) {
@@ -24,29 +26,31 @@ class App extends Component {
     this.getComments();
     // this.getReplies();
   }
-  
+    
   searchVideo = async (searchQuery) => {
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-    // let relatedVideos = await this.getRelatedVideos(response.data.items[0].id.videoId)
-    // .then(this.setState({
-      this.setState({
-      videoId: response.data.items[0].id.videoId,
-      videoTitle: response.data.items[0].snippet.title,
-      videoDescription: response.data.items[0].snippet.description,
-      // relatedVideos: relatedVideos
-    // }))
-      })
-    console.log(this.state.videoId)
-    console.log(this.state.videoTitle)
-    console.log(this.state.videoDescription)
+    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
+    let allVideos = response.data;
+    this.getRelatedVideos({
+      videoId: allVideos.items[0].id.videoId,
+      videoTitle: allVideos.items[0].snippet.title,
+      videoDescription: allVideos.items[0].snippet.description,
+    })
   }
 
-  getRelatedVideos = async () => {
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${this.state.videoId}&type=video&part=snippet&key=AIzaSyAOtZalV5ZaLSYGPTtfsVexqhBYHBtFfNA`)
-    this.setState({
-      relatedVideos: response.data.items
+  getRelatedVideos = async (videoData) => { 
+    let response = await axios.get (`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoData.videoId}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
+    let relatedVideos = response.data.items.filter(video => video.snippet);
+    let relatedVideosArray = relatedVideos.map((video) => {
+      return ({
+          videoId: video.id.videoId,
+          videoTitle: video.snippet.title,});
+      });
+      this.setState({
+        videoId: videoData.videoId,
+        videoTitle: videoData.videoTitle,
+        videoDescription: videoData.videoDescription,
+        relatedVideos: relatedVideosArray
     })
-    console.log(response.data.items)
   }
 
   getComments = async () => {
@@ -158,6 +162,7 @@ class App extends Component {
             frameborder="0"></iframe>
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
+        <RelatedVideos relatedVideos={this.state.relatedVideos} />
         <CommentForm showComments={this.getComments}/>
         <CommentList allComments={this.state.filteredComments}
         likeComment={this.likeComment} dislikeComment={this.dislikeComment}/>

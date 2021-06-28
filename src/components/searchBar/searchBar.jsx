@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 class SearchBar extends Component {
     constructor(props) {
         super(props);
@@ -24,9 +23,9 @@ class SearchBar extends Component {
     render() {
         return (
             <form onSubmit={(event) => this.handleSubmit(event)}>
-                <input type="text" name="searchQuery" placeholder="Search"
+                <input type="text" name="searchQuery" placeholder="Search..."
                 onChange={this.handleChange} value={this.searchQuery}/>
-                <button type="submit">Submit </button>
+                <button className="btn btn-danger" type="submit">Submit </button>
             </form>
         )
     }
