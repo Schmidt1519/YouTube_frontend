@@ -1,6 +1,7 @@
 import React, { Component }from 'react';
 import LikeComment from '../LikeComment/likeComment';
 import DislikeComment from '../DislikeComment/dislikeComment';
+import ReplyForm from '../ReplyForm/replyForm';
 
 class CommentList extends Component {   
     constructor(props) {
@@ -22,6 +23,7 @@ class CommentList extends Component {
                     likeComment={this.props.likeComment} />
                     <DislikeComment commentid={comment.id} videoid={comment.video_id}
                     dislikeComment={this.props.dislikeComment} />
+                    <ReplyForm commentid={comment.id} />
                 </div>
             ))}
             </div>

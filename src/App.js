@@ -5,6 +5,7 @@ import SearchBar from './components/searchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
 import RelatedVideos from './components/relatedVideos/relatedVideos'
+import ReplyForm from './components/ReplyForm/replyForm';
 
 class App extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class App extends Component {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
     let allVideos = response.data;
     console.log(response.data)
-    // // this.setState({
+    // this.setState({
     //   videoId: response.data.items[0].id.videoId,
     //   videoTitle: response.data.items[0].snippet.title,
     //   videoDescription: response.data.items[0].snippet.description,
@@ -82,6 +83,7 @@ class App extends Component {
 
   getReplies = async () => {
     try{
+      console.log("get all replies request is called")   // test
       let response = await axios.get('http://127.0.0.1:8000/reply/')
       this.setState({
         replies: response.data,
@@ -176,8 +178,7 @@ class App extends Component {
         <RelatedVideos relatedVideos={this.state.relatedVideos} />
         <CommentForm showComments={this.getComments} videoId={this.state.videoId}/>
         <CommentList allComments={this.state.filteredComments}
-        likeComment={this.likeComment} dislikeComment={this.dislikeComment}/>
-        {/* <h3>{this.state.relatedVideos}</h3> */}
+        likeComment={this.likeComment} dislikeComment={this.dislikeComment} />
       </React.Fragment>
     );
   }
