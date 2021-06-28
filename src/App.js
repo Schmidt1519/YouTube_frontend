@@ -27,15 +27,24 @@ class App extends Component {
     this.getComments();
     // this.getReplies();
   }
-    
+
   searchVideo = async (searchQuery) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
     let allVideos = response.data;
+    console.log(response.data)
+    // // this.setState({
+    //   videoId: response.data.items[0].id.videoId,
+    //   videoTitle: response.data.items[0].snippet.title,
+    //   videoDescription: response.data.items[0].snippet.description,
     this.getRelatedVideos({
       videoId: allVideos.items[0].id.videoId,
       videoTitle: allVideos.items[0].snippet.title,
       videoDescription: allVideos.items[0].snippet.description,
     })
+    // console.log(response.data)
+    // console.log(videoId)
+    // console.log(videoTitle)
+    // console.log(videoDescription)
   }
 
   getRelatedVideos = async (videoData) => { 
@@ -56,6 +65,7 @@ class App extends Component {
 
   getComments = async () => {
     try{
+      console.log("get all comments request is called")   // test
       let response = await axios.get('http://127.0.0.1:8000/comments/')
         // .then( console.log("response is: ", response.data)
           this.setState({
@@ -164,7 +174,7 @@ class App extends Component {
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
         <RelatedVideos relatedVideos={this.state.relatedVideos} />
-        <CommentForm showComments={this.getComments} video_id={this.state.videoId} />
+        <CommentForm showComments={this.getComments} videoId={this.state.videoId}/>
         <CommentList allComments={this.state.filteredComments}
         likeComment={this.likeComment} dislikeComment={this.dislikeComment}/>
         {/* <h3>{this.state.relatedVideos}</h3> */}
