@@ -1,6 +1,8 @@
 import React, { Component }from 'react';
+import LikeComment from '../LikeComment/likeComment';
+import DislikeComment from '../DislikeComment/dislikeComment';
 
-class CommentList extends Component {
+class CommentList extends Component {   
     constructor(props) {
         super(props);
             // this.state = {
@@ -16,6 +18,10 @@ class CommentList extends Component {
                     <p>{comment.comment_text}</p>
                     <p>{comment.like}</p>
                     <p>{comment.dislike}</p>
+                    <LikeComment commentid={comment.id} videoid={comment.video_id}
+                    likeComment={this.props.likeComment} />
+                    <DislikeComment commentid={comment.id} videoid={comment.video_id}
+                    dislikeComment={this.props.dislikeComment} />
                 </div>
             ))}
             </div>
