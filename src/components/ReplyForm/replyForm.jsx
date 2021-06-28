@@ -22,8 +22,9 @@ class ReplyForm extends Component {
             console.log("add reply request is called")  // test
             console.log(this.props.commentid)
             await axios.post('http://127.0.0.1:8000/comments/reply/', reply);
-            // this.props.showReplies();
+            this.props.showReplies();
             this.setState({
+                
             });
         }
         catch (err) {
@@ -56,6 +57,7 @@ class ReplyForm extends Component {
                         <button type="submit">Submit</button>
                     </div>
                 </form>
+                
             </React.Fragment>
         )
     }
