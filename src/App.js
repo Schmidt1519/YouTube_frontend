@@ -13,7 +13,8 @@ class App extends Component {
       this.state = {
         comments: [],
         filteredComments: [],
-        replies: [],
+        filteredReplies: [],   // needed?
+        replies: [],   // needed?
         // videoId: '',
         videoId: "pquPUX1EihM",
         videoTitle: '',
@@ -122,6 +123,15 @@ class App extends Component {
     console.log(this.state.filteredComments);
   }
 
+  // filterReplies = () => {
+  //   let filtered = this.state.replies.filter(reply => reply.video_id.includes(this.state.videoId))
+  //   console.log(this.state.videoId)
+  //   this.setState({
+  //     filteredReplies:filtered
+  //   })
+  //   console.log(this.state.filteredReplies);
+  // }
+
   likeComment = async (id, video_id) => {
     try{
       console.log("like comment function is called")  // test
@@ -177,7 +187,8 @@ class App extends Component {
         <RelatedVideos relatedVideos={this.state.relatedVideos} />
         <CommentForm showComments={this.getComments} videoId={this.state.videoId}/>
         <CommentList allComments={this.state.filteredComments}
-        likeComment={this.likeComment} dislikeComment={this.dislikeComment} />
+        likeComment={this.likeComment} dislikeComment={this.dislikeComment}
+        showReplies={this.getReplies} />
       </React.Fragment>
     );
   }

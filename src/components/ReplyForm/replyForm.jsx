@@ -7,24 +7,25 @@ class ReplyForm extends Component {
         super(props);
             this.state = {
                     reply_text: '',
-                    comment_id: '',
+                    // comment_id: '',
+                    comment: '',
             }
-            // this.handleChange = this.handleChange.bind(this); 
-            // this.handleSubmit = this.handleSubmit.bind(this); 
     }
 
     addReply = async () => {
         const reply = {
             reply_text: this.state.reply_text,
-            comment_id: this.props.commentid,
+            // comment_id: this.props.commentid,
+            comment: this.props.commentid,
         }
         try{
             console.log("add reply request is called")  // test
             console.log(this.props.commentid)
             await axios.post('http://127.0.0.1:8000/comments/reply/', reply);
-            // this.props.showReplies();
+            let replies = this.props.showReplies();
             this.setState({
             });
+            return replies;
         }
         catch (err) {
             console.log(err)
@@ -56,6 +57,7 @@ class ReplyForm extends Component {
                         <button type="submit">Submit</button>
                     </div>
                 </form>
+                <h2>{replies}</h2>
             </React.Fragment>
         )
     }
