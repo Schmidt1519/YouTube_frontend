@@ -80,40 +80,6 @@ class App extends Component {
     }
   }
 
-  // getReplies = async (commentid) => {
-  //   try{
-  //     console.log("get all replies request is called")   // test
-  //     let response = await axios.get(`http://127.0.0.1:8000/comments/reply/${commentid}/`)
-  //     this.setState({
-  //       replies: response.data,
-  //     });
-  //     console.log(this.state.replies)
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-  deleteCommentById = async (id) => {
-    try{
-      await axios.delete(`http://127.0.0.1:8000/comments/${id}`)
-      await this.getComments()
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-
-  deleteReplyById = async (id) => {
-    try{
-      await axios.delete(`http://127.0.0.1:8000/reply/${id}`)
-      await this.getReplies()
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
-
   filterComments = () => {
     let filtered = this.state.comments.filter(comment => comment.video_id.includes(this.state.videoId))
     console.log(this.state.videoId)
@@ -122,15 +88,6 @@ class App extends Component {
     })
     console.log(this.state.filteredComments);
   }
-
-  // filterReplies = () => {
-  //   let filtered = this.state.replies.filter(reply => reply.video_id.includes(this.state.videoId))
-  //   console.log(this.state.videoId)
-  //   this.setState({
-  //     filteredReplies:filtered
-  //   })
-  //   console.log(this.state.filteredReplies);
-  // }
 
   likeComment = async (id, video_id) => {
     try{
@@ -185,11 +142,10 @@ class App extends Component {
         <h2>{this.state.videoTitle}</h2>
         <h3>{this.state.videoDescription}</h3>
         <RelatedVideos relatedVideos={this.state.relatedVideos} />
-        <CommentForm showComments={this.getComments} videoId={this.state.videoId}/>
-        <CommentList allComments={this.state.filteredComments}
+        <CommentForm getComments={this.getComments} videoId={this.state.videoId}/>
+        <CommentList filteredComments={this.state.filteredComments}
         likeComment={this.likeComment} dislikeComment={this.dislikeComment}
-        showReplies={this.state.replies} getReplies={this.getReplies} />
-         
+        showReplies={this.state.replies} />
       </React.Fragment>
     );
   }

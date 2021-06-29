@@ -10,8 +10,6 @@ class CommentForm extends Component {
                     like: '',
                     dislike: '',
             }
-            // this.handleChange = this.handleChange.bind(this); 
-            // this.handleSubmit = this.handleSubmit.bind(this); 
     }
 
     addComment = async () => {
@@ -23,7 +21,8 @@ class CommentForm extends Component {
             console.log("add comment request is called")  // test
             console.log(this.props.videoId)
             await axios.post('http://127.0.0.1:8000/comments/', comment);
-            this.props.showComments();
+            this.props.getComments();
+            console.log(this.props.getComments)
             this.setState({
             });
         }
