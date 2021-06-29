@@ -1,31 +1,42 @@
 import React, {Component} from 'react';
 import axios from 'axios'
 import CommentList from '../CommentList/commentList';
+import Replies from '../Replies/replies';
 
 class ReplyForm extends Component {
     constructor(props) {
         super(props);
             this.state = {
                     reply_text: '',
-                    // comment_id: '',
                     comment: '',
             }
     }
 
+    // getReplies = async () => {
+    //     try{
+    //       console.log("get all replies request is called")   // test
+    //       let response = await axios.get('http://127.0.0.1:8000/reply/')
+    //       this.setState({
+    //         replies: response.data,
+    //       });
+    //     }
+    //     catch (err) {
+    //       console.log(err)
+    //     }
+
     addReply = async () => {
         const reply = {
             reply_text: this.state.reply_text,
-            // comment_id: this.props.commentid,
             comment: this.props.commentid,
         }
         try{
             console.log("add reply request is called")  // test
             console.log(this.props.commentid)
+            console.log(this.props)
             await axios.post('http://127.0.0.1:8000/comments/reply/', reply);
-            let replies = this.props.showReplies();
+            this.props.getReplies();
             this.setState({
             });
-            return replies;
         }
         catch (err) {
             console.log(err)
@@ -57,7 +68,6 @@ class ReplyForm extends Component {
                         <button type="submit">Submit</button>
                     </div>
                 </form>
-                <h2>{replies}</h2>
             </React.Fragment>
         )
     }

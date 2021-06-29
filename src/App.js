@@ -5,7 +5,6 @@ import SearchBar from './components/SearchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
 import RelatedVideos from './components/RelatedVideos/relatedVideos'
-import ReplyForm from './components/ReplyForm/replyForm';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class App extends Component {
         comments: [],
         filteredComments: [],
         filteredReplies: [],   // needed?
-        replies: [],   // needed?
+        replies: [],
         // videoId: '',
         videoId: "pquPUX1EihM",
         videoTitle: '',
@@ -26,7 +25,7 @@ class App extends Component {
   componentDidMount() {
     // this.searchVideo('software development')
     this.getComments();
-    // this.getReplies();
+    // this.getReplies(this.state.commentid);
   }
 
   searchVideo = async (searchQuery) => {
@@ -81,18 +80,19 @@ class App extends Component {
     }
   }
 
-  getReplies = async () => {
-    try{
-      console.log("get all replies request is called")   // test
-      let response = await axios.get('http://127.0.0.1:8000/reply/')
-      this.setState({
-        replies: response.data,
-      });
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  // getReplies = async (commentid) => {
+  //   try{
+  //     console.log("get all replies request is called")   // test
+  //     let response = await axios.get(`http://127.0.0.1:8000/comments/reply/${commentid}/`)
+  //     this.setState({
+  //       replies: response.data,
+  //     });
+  //     console.log(this.state.replies)
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   deleteCommentById = async (id) => {
     try{
@@ -188,7 +188,8 @@ class App extends Component {
         <CommentForm showComments={this.getComments} videoId={this.state.videoId}/>
         <CommentList allComments={this.state.filteredComments}
         likeComment={this.likeComment} dislikeComment={this.dislikeComment}
-        showReplies={this.getReplies} />
+        showReplies={this.state.replies} getReplies={this.getReplies} />
+         
       </React.Fragment>
     );
   }
