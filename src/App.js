@@ -12,7 +12,6 @@ class App extends Component {
       this.state = {
         comments: [],
         filteredComments: [],
-        filteredReplies: [],   // needed?
         replies: [],
         // videoId: '',
         videoId: "pquPUX1EihM",
@@ -25,7 +24,6 @@ class App extends Component {
   componentDidMount() {
     // this.searchVideo('software development')
     this.getComments();
-    // this.getReplies(this.state.commentid);
   }
 
   searchVideo = async (searchQuery) => {
@@ -67,13 +65,11 @@ class App extends Component {
     try{
       console.log("get all comments request is called")   // test
       let response = await axios.get('http://127.0.0.1:8000/comments/')
-        // .then( console.log("response is: ", response.data)
           this.setState({
           comments: response.data,
           })
           console.log(response.data)
-        // )
-        this.filterComments();
+      this.filterComments();
     }
     catch (err) {
       console.log(err)

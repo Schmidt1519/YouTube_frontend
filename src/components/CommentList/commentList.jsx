@@ -2,7 +2,6 @@ import React, { Component }from 'react';
 import LikeComment from '../LikeComment/likeComment';
 import DislikeComment from '../DislikeComment/dislikeComment';
 import ReplyForm from '../ReplyForm/replyForm';
-// import Replies from '../Replies/replies';
 import axios from 'axios';
 
 class CommentList extends Component {   
@@ -14,10 +13,6 @@ class CommentList extends Component {
         }
     }   
     
-    // componentDidMount() {
-    //     this.props.getReplies(this.state.commentid);
-    // }
-
     getReplies = async (commentid) => {
         try{
             console.log("get all replies request is called")   // test
@@ -25,7 +20,7 @@ class CommentList extends Component {
             this.setState({
             replies: response.data,
             });
-            console.log(this.state.replies)
+            console.log(this.state.replies)  // test
         }
         catch (err) {
             console.log(err)
@@ -33,8 +28,8 @@ class CommentList extends Component {
     }
     
     render() {
-        console.log(this.props.showReplies)
-        console.log(this.props.commentId)
+        console.log(this.props.showReplies)  // test
+        console.log(this.props.commentId)  // test
         return(
             <div>
             {this.props.filteredComments.map((comment) => (
@@ -42,7 +37,7 @@ class CommentList extends Component {
                     <p>{comment.comment_text}</p>
                     <p>{comment.like}</p>
                     <p>{comment.dislike}</p>
-                    
+
                     {this.state.replies.map((reply) => (
                     <p>{reply.reply_text}</p>
                 ))}
@@ -51,8 +46,8 @@ class CommentList extends Component {
                     likeComment={this.props.likeComment} />
                     <DislikeComment commentid={comment.id} videoid={comment.video_id}
                     dislikeComment={this.props.dislikeComment} />
-                    <ReplyForm commentid={comment.id} getReplies={this.getReplies} comment={comment.id}/>
-                    {/* <Replies replies={this.state.replies} /> */}
+                    <ReplyForm commentid={comment.id} getReplies={this.getReplies} 
+                    comment={comment.id}/>
                 </div>
             ))}
             </div>

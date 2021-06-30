@@ -19,10 +19,10 @@ class CommentForm extends Component {
         }
         try{
             console.log("add comment request is called")  // test
-            console.log(this.props.videoId)
+            console.log(this.props.videoId)  // test
             await axios.post('http://127.0.0.1:8000/comments/', comment);
             this.props.getComments();
-            console.log(this.props.getComments)
+            console.log(this.props.getComments)  // test
             this.setState({
             });
         }
