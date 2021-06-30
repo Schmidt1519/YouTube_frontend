@@ -3,7 +3,7 @@ import React from 'react';
 function DislikeComment(props){
     return(
         <div>
-            <button type="button" onClick={() =>
+            <button className="btn btn-danger" type="button" onClick={() =>
             props.dislikeComment(props.commentid, props.videoid)}>Dislike</button>
         </div>
     )

@@ -10,8 +10,6 @@ class CommentForm extends Component {
                     like: '',
                     dislike: '',
             }
-        // this.handleChange = this.handleChange.bind(this); 
-        // this.handleSubmit = this.handleSubmit.bind(this);  
     }
 
     addComment = async () => {
@@ -23,7 +21,8 @@ class CommentForm extends Component {
             console.log("add comment request is called")  // test
             console.log(this.props.videoId)
             await axios.post('http://127.0.0.1:8000/comments/', comment);
-            this.props.showComments();
+            this.props.getComments();
+            console.log(this.props.getComments)
             this.setState({
             });
         }
@@ -48,14 +47,14 @@ class CommentForm extends Component {
     render() {
         return(
             <React.Fragment>
-                <h1>Comments</h1>
+                <h1>Comments:</h1>
                 <form onSubmit={(event) => this.handleSubmit(event)}>
                     <div>
                     <input type="text" name="comment_text" onChange={this.handleChange}
                     value={this.state.comment_text} placeholder="Comment here"/>    
                     </div>  
                     <div>
-                        <button type="submit">Submit</button>
+                        <button className="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </React.Fragment>
