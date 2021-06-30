@@ -11,6 +11,9 @@ class CommentList extends Component {
             // }
     }
 
+    showReplies(){
+    
+    }
     render() {
         return(
             <div>
@@ -23,7 +26,7 @@ class CommentList extends Component {
                     likeComment={this.props.likeComment} />
                     <DislikeComment commentid={comment.id} videoid={comment.video_id}
                     dislikeComment={this.props.dislikeComment} />
-                    <ReplyForm commentid={comment.id} showReplies={this.props.getReplies} />
+                    <ReplyForm commentid={comment.id} showReplies={this.showReplies} />
                 </div>
             ))}
             </div>

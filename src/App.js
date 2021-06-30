@@ -85,14 +85,16 @@ class App extends Component {
   getReplies = async () => {
     try{
       console.log("get all replies request is called")   // test
-      let response = await axios.get('http://127.0.0.1:8000/reply/')
+      let response = await axios.get('http://127.0.0.1:8000/comments/reply/')
       this.setState({
         replies: response.data,
       });
+      
     }
     catch (err) {
       console.log(err)
     }
+    
   }
 
   deleteCommentById = async (id) => {
@@ -113,6 +115,7 @@ class App extends Component {
     catch (err) {
       console.log(err)
     }
+    
   }
 
   filterComments = () => {

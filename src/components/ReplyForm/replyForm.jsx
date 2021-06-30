@@ -22,21 +22,16 @@ class ReplyForm extends Component {
             console.log("add reply request is called")  // test
             console.log(this.props.commentid)
             await axios.post('http://127.0.0.1:8000/comments/reply/', reply);
-<<<<<<< HEAD
             this.props.showReplies();
-=======
-            let replies = this.props.showReplies();
->>>>>>> 5ca0c3fab68bee8104a2ff94c4f2cd972e7f149d
             this.setState({
                 
             });
-            return replies;
         }
         catch (err) {
             console.log(err)
         }
+        
     }
-    
     handleChange = (event) => {
         console.log("beginning handle change") // test
         this.setState({
@@ -62,11 +57,8 @@ class ReplyForm extends Component {
                         <button type="submit">Submit</button>
                     </div>
                 </form>
-<<<<<<< HEAD
                 
-=======
-                <h2>{replies}</h2>
->>>>>>> 5ca0c3fab68bee8104a2ff94c4f2cd972e7f149d
+                
             </React.Fragment>
         )
     }
