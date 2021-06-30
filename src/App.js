@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchBar from './components/searchBar/searchBar';
+import SearchBar from './components/SearchBar/searchBar';
 import CommentForm from './components/CommentForm/commentForm';
 import CommentList from './components/CommentList/commentList';
-import RelatedVideos from './components/relatedVideos/relatedVideos'
+import RelatedVideos from './components/RelatedVideos/relatedVideos'
 
 class App extends Component {
   constructor(props) {
