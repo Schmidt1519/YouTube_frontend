@@ -41,13 +41,11 @@ class CommentList extends Component {
                     {this.state.replies.map((reply) => (
                     <p>{reply.reply_text}</p>
                 ))}
-
                     <LikeComment commentid={comment.id} videoid={comment.video_id}
                     likeComment={this.props.likeComment} />
                     <DislikeComment commentid={comment.id} videoid={comment.video_id}
                     dislikeComment={this.props.dislikeComment} />
                     <ReplyForm commentid={comment.id} getReplies={this.getReplies} comment={comment.id}/>
-                    {/*= <Replies replies={this.state.replies} /> */}
                 </div>
             ))}
             </div>

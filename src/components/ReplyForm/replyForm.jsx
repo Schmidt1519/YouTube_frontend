@@ -31,11 +31,9 @@ class ReplyForm extends Component {
         
     }
     handleChange = (event) => {
-        console.log("beginning handle change") // test
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log("end of handle change") // test
     }
 
     handleSubmit = async (event) => {

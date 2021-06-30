@@ -23,27 +23,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.searchVideo('software development')
+    this.searchVideo('software development')
     this.getComments();
   }
 
   searchVideo = async (searchQuery) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchQuery}&type=video&part=snippet&key=AIzaSyAIfh92bqWo0T_AbXjELe4jIF2iDLZvb18`);
     let allVideos = response.data;
-    console.log(response.data)
-    // this.setState({
-    //   videoId: response.data.items[0].id.videoId,
-    //   videoTitle: response.data.items[0].snippet.title,
-    //   videoDescription: response.data.items[0].snippet.description,
+
     this.getRelatedVideos({
       videoId: allVideos.items[0].id.videoId,
       videoTitle: allVideos.items[0].snippet.title,
       videoDescription: allVideos.items[0].snippet.description,
     })
-    // console.log(response.data)
-    // console.log(videoId)
-    // console.log(videoTitle)
-    // console.log(videoDescription)
+
   }
 
   getRelatedVideos = async (videoData) => { 
@@ -69,7 +62,6 @@ class App extends Component {
           this.setState({
           comments: response.data,
           })
-          console.log(response.data)
       this.filterComments();
     }
     catch (err) {
@@ -79,7 +71,7 @@ class App extends Component {
 
   filterComments = () => {
     let filtered = this.state.comments.filter(comment => comment.video_id.includes(this.state.videoId))
-    console.log(this.state.videoId)
+    console.log(this.state.videoId)   // test
     this.setState({
       filteredComments:filtered
     })
@@ -88,10 +80,8 @@ class App extends Component {
 
   likeComment = async (id, video_id) => {
     try{
-      console.log("like comment function is called")  // test
       await axios.patch(`http://127.0.0.1:8000/comments/${id}/${video_id}/1/`)
       let response = await this.getComments()
-      console.log("like comment response")  // test
       if(response === undefined) {
         this.setState({
         })
@@ -109,10 +99,8 @@ class App extends Component {
 
   dislikeComment = async (id, video_id) => {
     try{
-      console.log("dislike comment function is called")  // test
       await axios.patch(`http://127.0.0.1:8000/comments/${id}/${video_id}/2/`)
       let response = await this.getComments()
-      console.log("dislike comment response")  // test
       if(response === undefined) {
         this.setState({
         })
