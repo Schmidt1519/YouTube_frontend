@@ -11,5 +11,5 @@ This YouTube clone partner project allows users to search for a video, see the t
 * Postman
 * YouTube API
 
-### Related
+## Related
 Link to Backend: https://github.com/Schmidt1519/YouTube_backend
